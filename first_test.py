@@ -1,0 +1,52 @@
+# %%
+'''
+1. Importing the data
+2. Sorting the data and removing unwanted stuff
+3. counting total whatsapp ones
+4. count the ones finished and got report
+5. subtract and find the ones didn't use
+'''
+# %%
+#importing the necessities
+import numpy as np
+import pandas as pd
+# %%
+total_whatsapp_users = 0
+whats_rev =0
+total = 0
+lst_whatsapp_users = []
+lst_whats_rep = []
+file_names = ['C:\\Users\\16124\\Documents\\Rishika\\intership\\Niramai\\BOT analysis\\Data\\chat_dump_AdHoc-1_6_2022-1_7_2022-VJxqL.csv','C:\\Users\\16124\\Documents\\Rishika\\intership\\Niramai\\BOT analysis\\Data\\chat_dump_AdHoc-1_5_2022-1_6_2022-nkwKQ.csv','C:\\Users\\16124\\Documents\\Rishika\\intership\\Niramai\\BOT analysis\\Data\\chat_dump_AdHoc-1_4_2022-1_5_2022-ppWtJ.csv']
+#file names is a list of paths of the csv files
+for file_name in file_names:
+    df = pd.read_csv(file_name)
+    df.drop(['Timestamp','RoomStartTime'], axis=1)
+    for index,i in enumerate(df['Message']):
+        z = str(i)
+        if z.startswith("Welcome to Niramai, Select"): 
+            total_whatsapp_users += 1
+            lst_whatsapp_users.append(df["RoomId"][index])
+
+        if z.startswith("Thank you for talking with us :)") or z.startswith("There seems to an issue with our service. Please try after some time."):
+            whats_rev +=1
+            lst_whats_rep.append(df["RoomId"][index])
+            
+        lst = df['RoomId'].unique()
+        k =len(lst)
+    total+=k
+
+
+print("total HRA users =",total_whatsapp_users)  
+print("Report generated for HRA users = ",whats_rev)
+print("total number of users = ",total)
+print("total NIHA users =", total - total_whatsapp_users)
+print("list of all HRA users")
+print(lst_whatsapp_users)
+print("list of users who  got report in HRA")
+print(lst_whats_rep)
+
+# %%
+
+# %%
+
+# %%
